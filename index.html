@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Protocol">
+<meta name="theme-color" content="#0a0a0f">
+<title>Daily Protocol</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;background:#0a0a0f;color:#e8e8ed;min-height:100vh;min-height:100dvh;max-width:480px;margin:0 auto;padding-bottom:env(safe-area-inset-bottom,20px);overscroll-behavior:none}
+.hdr{background:linear-gradient(180deg,#0f172a,#0a0a0f);padding:max(env(safe-area-inset-top),20px) 18px 14px;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(255,255,255,.04)}
+.hdr-r{display:flex;justify-content:space-between;align-items:flex-start}
+.dt{font-size:11px;letter-spacing:1.5px;color:#4b5563;text-transform:uppercase}
+.ttl{font-size:20px;font-weight:700;color:#f1f5f9;margin-top:2px}
+.pct{font-size:28px;font-weight:800;line-height:1;text-align:right;transition:color .3s}
+.sub{font-size:10px;color:#4b5563;margin-top:2px;text-align:right}
+.rst{margin-left:8px;color:#ef4444;cursor:pointer;font-weight:600;display:none}
+.bar{margin-top:10px;height:4px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden}
+.bf{height:4px;border-radius:4px;transition:width .4s ease}
+.sv{font-size:9px;color:#374151;margin-top:4px;min-height:14px}
+.tabs{display:flex;gap:2px;margin-top:12px;background:rgba(255,255,255,.03);border-radius:10px;padding:3px}
+.tb{flex:1;text-align:center;padding:7px 0;font-size:12px;font-weight:600;border-radius:8px;cursor:pointer;transition:all .2s;color:#4b5563}
+.tb.on{background:rgba(59,130,246,.15);color:#60a5fa}
+.pg{padding:4px 14px}
+.hide{display:none}
+.leg{display:flex;gap:10px;padding:10px 0 6px;font-size:10px;color:#4b5563;flex-wrap:wrap}
+.ld{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:3px;vertical-align:middle}
+.sec{margin-bottom:16px}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:10px 0 6px;border-bottom:1px solid rgba(255,255,255,.03)}
+.sl{display:flex;align-items:center;gap:7px}
+.si{font-size:16px}
+.st{font-size:14px;font-weight:700;color:#f1f5f9}
+.st.dn{color:#10b981}
+.slb{font-size:10px;color:#4b5563}
+.sb{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px}
+.it{display:flex;align-items:flex-start;gap:10px;padding:9px 2px;border-bottom:1px solid rgba(255,255,255,.015);cursor:pointer;transition:opacity .25s}
+.it.ck{opacity:.35}
+.cb{width:20px;height:20px;min-width:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .2s;border:1.5px solid rgba(255,255,255,.12);flex-shrink:0}
+.cb.ck{border:none;background:#10b981}
+.cb.ck::after{content:'✓';color:#fff;font-size:11px;font-weight:800}
+.nm{font-size:13.5px;font-weight:600;color:#e2e8f0}
+.it.ck .nm{color:#4b5563;text-decoration:line-through}
+.ds{font-size:11.5px;color:#6b7280;font-weight:500}
+.tg{font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;letter-spacing:.3px;white-space:nowrap}
+.tg-n{color:#10b981;background:rgba(16,185,129,.1)}
+.tg-m{color:#f59e0b;background:rgba(245,158,11,.1)}
+.tg-h{color:#ec4899;background:rgba(236,72,153,.08)}
+.tg-cv{color:#06b6d4;background:rgba(6,182,212,.1)}
+.tg-c{color:#8b5cf6;background:rgba(139,92,246,.08)}
+.nt{font-size:10.5px;color:#4b5563;margin-top:1.5px;line-height:1.3}
+.tgs{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.cd{background:rgba(255,255,255,.02);border-radius:10px;padding:12px 13px;margin-bottom:6px}
+.cdb{border-left:3px solid}
+.cdt{font-size:13px;font-weight:700;color:#d1d5db}
+.cda{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px}
+.cdd{font-size:11px;color:#6b7280;margin-top:4px}
+.cds{font-size:11px;font-weight:600;margin-top:3px}
+.cde{font-size:10px;color:#6b7280;margin-top:3px}
+.cdtm{font-size:9px;color:#4b5563;margin-top:3px}
+.stt{font-size:11px;font-weight:700;color:#6b7280;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.alt{font-size:12px;color:#94a3b8;margin-bottom:14px;line-height:1.5;padding:11px 12px;background:rgba(239,68,68,.05);border-radius:10px;border:1px solid rgba(239,68,68,.1)}
+.alt b{color:#f87171}
+.nc{background:rgba(255,255,255,.02);border-radius:10px;padding:12px 13px;margin-bottom:6px}
+.nct{font-size:12px;font-weight:700;color:#d1d5db;margin-bottom:4px}
+.ncb{font-size:11px;color:#6b7280;line-height:1.5}
+.mc{background:rgba(255,255,255,.02);border-radius:10px;padding:12px 13px;border-left:3px solid #f59e0b}
+.mc div{font-size:11px;color:#d1d5db;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="hdr">
+<div class="hdr-r">
+<div><div class="dt" id="dS"></div><div class="ttl">Daily Protocol</div></div>
+<div><div class="pct" id="pD">0%</div><div class="sub"><span id="cD">0/0</span><span class="rst" id="rB" onclick="R()">RESET</span></div></div>
+</div>
+<div class="bar"><div class="bf" id="bF"></div></div>
+<div class="sv" id="sM"></div>
+<div class="tabs">
+<div class="tb on" id="t-d" onclick="T('d')">Protocol</div>
+<div class="tb" id="t-c" onclick="T('c')">HRV Changes</div>
+<div class="tb" id="t-n" onclick="T('n')">Notes</div>
+</div>
+</div>
+<div id="p-d" class="pg"></div>
+<div id="p-c" class="pg hide"></div>
+<div id="p-n" class="pg hide"></div>
+<script>
+const S=[
+{t:"8:00 AM",l:"Morning — Empty Stomach",i:"☀️",x:[
+{n:"Hyaluronic Acid",d:"100–200mg",o:"Empty stomach + water"},
+{n:"L-Tyrosine",d:"1,000mg",o:"30 min before food"},
+{n:"Lion's Mane",d:"1,000mg (2 caps)",o:"Nootropics Depot 8:1 dual extract"},
+{n:"Tadalafil",d:"10mg",o:"Daily — peak levels at workout for pump + CV protection",cv:1},
+{n:"UC-II Collagen",d:"40mg",o:"Empty stomach — joint immune tolerance",w:1},
+{n:"Psilocybin",d:"1 packed 00 capsule",o:"Dosing days only (EOD)",cn:1},
+]},
+{t:"11:00 AM",l:"Post-Workout Shake",i:"💪",x:[
+{n:"Whey Isolate Shake"},
+{n:"PerfectAmino",d:"1 scoop",o:"In shake"},
+{n:"Creatine",d:"10g",o:"In shake"},
+{n:"Gorilla Mind Elite Multi",d:"2 caps"},
+{n:"Omega-3 Elixir",d:"3 softgels",o:"3,120mg EPA+DHA · includes 6mg astaxanthin",h:1,m:1},
+{n:"PEA — 1st dose",d:"300–400mg"},
+{n:"Citrus Bergamot",d:"500mg",o:"NAOMI BergaMore"},
+{n:"DIM",d:"200mg",o:"SM Nutrition"},
+{n:"CoQ10 (Ubiquinol)",d:"200mg",o:"With fat-containing meal",h:1},
+{n:"Milk Thistle",o:"Liver support"},
+{n:"Vitamin D3",d:"5,000 IU",o:"Sports Research"},
+{n:"Colostrum",o:"Transparent Labs"},
+{n:"Alpha-Lipoic Acid",d:"600mg",o:"Autonomic neuropathy support",w:1,h:1},
+{n:"NAC",d:"600mg",o:"1st dose — glutathione + HRV",w:1,h:1},
+{n:"Epicatechin",d:"200mg",o:"eNOS/NO support + myostatin inhibition",w:1},
+]},
+{t:"12–2:00 PM",l:"2nd Meal (optional)",i:"🥩",x:[
+{n:"Primal + Carnivore Shake",d:"1 scoop each",o:"With water"},
+]},
+{t:"6–7:00 PM",l:"Dinner",i:"🍽️",x:[
+{n:"Gorilla Mind Elite Multi",d:"1 cap (3rd)"},
+{n:"PEA — 2nd dose",d:"300–400mg"},
+{n:"Citrus Bergamot",d:"500mg",o:"NAOMI BergaMore — 2nd dose"},
+{n:"Calcium D-Glucarate",d:"500mg",o:"NOW Foods — estrogen clearance"},
+{n:"Niacin (Nicotinic Acid)",d:"500mg",o:"ENDUR-ACIN — with food"},
+{n:"NAC",d:"600mg",o:"2nd dose (1,200mg/day total)",w:1,h:1},
+{n:"Epicatechin",d:"200mg",o:"2nd dose — maintains levels overnight",w:1},
+]},
+{t:"10:30–11:30 PM",l:"Sleep Stack",i:"🌙",x:[
+{n:"Magnesium Glycinate",d:"400mg elemental",o:"PRIMARY — cardiac/HRV support",w:1,h:1},
+{n:"Magnesium L-Threonate",d:"2 caps",o:"Reduced from 4 — brain/cognitive",m:1},
+{n:"Melatonin",d:"2–3mg",o:"Vagal tone + sympatholytic",w:1,h:1},
+{n:"Taurine",d:"2–3g",o:"Increased from 1g for HRV",m:1,h:1},
+{n:"Apigenin",d:"50mg",o:"25–50mg start, max 100mg"},
+{n:"Glycine",d:"3g",o:"Powder in water — use to wash down pills"},
+]},
+];
+let ck={},ct='d';
+function dk(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function ld(){try{const r=localStorage.getItem('p:'+dk());if(r)ck=JSON.parse(r).c||{};else ck={};}catch(e){ck={};}}
+function sv(){try{localStorage.setItem('p:'+dk(),JSON.stringify({c:ck,d:dk()}));document.getElementById('sM').textContent='Saved '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+' · resets at midnight';}catch(e){}}
+function uh(){
+const tot=S.reduce((a,s)=>a+s.x.length,0),dn=Object.values(ck).filter(Boolean).length,pc=Math.round(dn/tot*100);
+const el=document.getElementById('pD');el.textContent=pc+'%';el.style.color=pc===100?'#10b981':'#60a5fa';
+document.getElementById('cD').textContent=dn+'/'+tot;
+document.getElementById('rB').style.display=dn>0?'inline':'none';
+const b=document.getElementById('bF');b.style.width=pc+'%';b.style.background=pc===100?'linear-gradient(90deg,#10b981,#34d399)':'linear-gradient(90deg,#3b82f6,#60a5fa)';
+document.getElementById('dS').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+}
+function tg(si,ii){const k=si+'-'+ii;ck[k]=!ck[k];if(!ck[k])delete ck[k];sv();rd();uh();}
+function R(){ck={};sv();rd();uh();}
+function T(t){ct=t;['d','c','n'].forEach(id=>{document.getElementById('p-'+id).className=id===t?'pg':'pg hide';document.getElementById('t-'+id).className=id===t?'tb on':'tb';});}
+function tgs(it){let h='';if(it.w)h+='<span class="tg tg-n">NEW</span>';if(it.m)h+='<span class="tg tg-m">MODIFIED</span>';if(it.h)h+='<span class="tg tg-h">HRV</span>';if(it.cv)h+='<span class="tg tg-cv">CARDIO</span>';if(it.cn)h+='<span class="tg tg-c">IF DOSING DAY</span>';return h;}
+function rd(){
+let h='<div class="leg"><span><span class="ld" style="background:#10b981"></span>New</span><span><span class="ld" style="background:#f59e0b"></span>Modified</span><span><span class="ld" style="background:#ec4899"></span>HRV</span><span><span class="ld" style="background:#06b6d4"></span>Cardio</span></div>';
+S.forEach((s,si)=>{
+const sc=s.x.filter((_,i)=>ck[si+'-'+i]).length,st=s.x.length,dn=sc===st;
+h+='<div class="sec"><div class="sh"><div class="sl"><span class="si">'+s.i+'</span><div><div class="st'+(dn?' dn':'')+'">'+s.t+'</div><div class="slb">'+s.l+'</div></div></div><div class="sb" style="color:'+(dn?'#10b981':'#4b5563')+';background:'+(dn?'rgba(16,185,129,.1)':'rgba(255,255,255,.03)')+'">'+(dn?'✓ Done':sc+'/'+st)+'</div></div>';
+s.x.forEach((it,ii)=>{
+const k=si+'-'+ii,c=ck[k];
+h+='<div class="it'+(c?' ck':'')+'" onclick="tg('+si+','+ii+')"><div class="cb'+(c?' ck':'')+'"></div><div style="flex:1"><div class="tgs"><span class="nm">'+it.n+'</span>'+(it.d?'<span class="ds">'+it.d+'</span>':'')+tgs(it)+'</div>'+(it.o?'<div class="nt">'+it.o+'</div>':'')+'</div></div>';
+});
+h+='</div>';
+});
+document.getElementById('p-d').innerHTML=h;
+}
+function rc(){
+const ch=[
+{n:"Nandrolone Decanoate",a:"TAPER OFF",d:"#1 HRV suppressor — skip every other injection now",c:"#ef4444"},
+{n:"Retatrutide",a:"4mg → 2mg",d:"Dose-dependent HRV suppression; results at 2mg",c:"#f59e0b"},
+{n:"Melanotan II",a:"MONITOR",d:"250mcg 1–2x/wk is low — deprioritize",c:"#3b82f6"},
+{n:"VIP",a:"EVALUATE",d:"Paradoxically raises HR — discuss with prescriber",c:"#f59e0b"},
+{n:"Astaxanthin (standalone)",a:"DROPPED",d:"Getting 6mg from 3× Omega-3 Elixir",c:"#6b7280"},
+{n:"Tadalafil 10mg",a:"KEEP DAILY",d:"34% mortality reduction, sympatholytic, endothelial repair",c:"#10b981"},
+{n:"UC-II Collagen 40mg",a:"ADDED",d:"Joint immune tolerance during deca taper",c:"#10b981"},
+{n:"Epicatechin 400mg/day",a:"ADDED",d:"eNOS/NO, anti-myostatin, HDL support, insulin sensitivity",c:"#10b981"},
+];
+const sp=[
+{n:"Magnesium Glycinate",d:"400mg elemental · bedtime",e:"RCT: pNN50 ↑, LF/HF ↓ over 90 days",tm:"4–12 wks"},
+{n:"Melatonin",d:"2–3mg · bedtime",e:"RCT: rMSSD ↑, HF ↑ within 60 min",tm:"Acute"},
+{n:"NAC",d:"600mg 2×/day (1,200mg)",e:"RCT: SDNN maintained vs decline in controls",tm:"3–6 mo"},
+{n:"Alpha-Lipoic Acid",d:"600mg · with meal",e:"DEKAN trial: rMSSD ↑, LF ↑, HF ↑",tm:"3–4 mo"},
+{n:"Taurine ↑",d:"2–3g · bedtime (was 1g)",e:"Cardioprotective, antiarrhythmic",tm:"4–8 wks"},
+{n:"Epicatechin",d:"200mg 2×/day · 11AM + dinner",e:"eNOS activation, NO boost, myostatin inhibition",tm:"4–8 wks"},
+];
+let h='<div class="alt"><b>HRV Critical:</b> SDNN collapsed 55→8ms (Jan–Mar). Target: recover above 50ms.</div><div class="stt" style="margin-top:0">Compound Adjustments</div>';
+ch.forEach(c=>{h+='<div class="cd cdb" style="border-left-color:'+c.c+'"><div style="display:flex;justify-content:space-between;align-items:center"><span class="cdt">'+c.n+'</span><span class="cda" style="color:'+c.c+';background:'+c.c+'15">'+c.a+'</span></div><div class="cdd">'+c.d+'</div></div>';});
+h+='<div class="stt" style="margin-top:20px">New HRV Supplements</div>';
+sp.forEach(s=>{h+='<div class="cd cdb" style="border-left-color:#10b981"><div class="cdt">'+s.n+'</div><div class="cds" style="color:#10b981">'+s.d+'</div><div class="cde">'+s.e+'</div><div class="cdtm">Timeline: '+s.tm+'</div></div>';});
+h+='<div class="stt" style="margin-top:20px">Nandrolone Taper</div>';
+h+='<div class="cd cdb" style="border-left-color:#ef4444"><div class="cdt">Taper Schedule</div><div class="cdd" style="line-height:1.6">Wks 1–3 (Klow OFF): 30mg every 4 days (~52mg/wk)<br>Wks 4–6 (Klow ON): 15mg every 4 days (~26mg/wk)<br>Wk 7+: Discontinue completely</div></div>';
+h+='<div class="stt" style="margin-top:20px">Magnesium Total</div>';
+h+='<div class="mc"><div>Elite Multi: 105mg (bisglycinate)<br>L-Threonate 2 caps: ~72mg<br>Glycinate: 400mg<br><b style="color:#f59e0b">Total: ~577mg elemental/day</b></div></div>';
+document.getElementById('p-c').innerHTML=h;
+}
+function rn(){
+const ns=[
+{t:"Omega-3 Update",c:"Gorilla Mind Elixir → 3 softgels = 3,120mg EPA+DHA (1,872 EPA + 1,248 DHA). Includes 6mg astaxanthin — standalone astaxanthin DROPPED."},
+{t:"Tadalafil",c:"10mg daily at 8AM empty stomach. Peaks at ~2hrs (workout). 17.5h half-life = continuous PDE5 coverage. Do NOT combine with nitrates. Mild BP reduction is beneficial."},
+{t:"UC-II Collagen",c:"40mg daily at 8AM empty stomach. Works through immune tolerance, not building blocks. Takes 4–6 weeks to build effect. Different from regular collagen supplements."},
+{t:"Epicatechin",c:"200mg 2x/day with meals (11AM + dinner, 400mg total). Short half-life (~2–3hrs) requires split dosing. Stacks with tadalafil via complementary NO/eNOS pathway. Also inhibits myostatin for muscle preservation during deca taper."},
+{t:"Psilocybin Schedule",c:"EOD during on-cycles. 4wk on → 1wk off. After 2 cycles, 2wk break. Continue Lion's Mane, Semax, L-Tyrosine, MOTS-c daily through off periods."},
+{t:"Timing Separations",c:"GH secretagogues = empty stomach. Separate from fat-soluble supps (omega-3, CoQ10, ALA) by 2+ hours. Tadalafil + UC-II OK empty stomach at 8AM. Late night snacks interfere with Tesa/CJC/Ipa."},
+{t:"Niacin Flush",c:"Start ENDUR-ACIN at 250mg × 1–2 weeks. Always with dinner. Optional baby aspirin 30 min prior."},
+{t:"IM Shots (Home)",c:"CoQ10: 50–100mg, 2x/wk (wks 1–6) → 1x/wk (7–12) → biweekly (13+). B12: 1,000mcg methylcobalamin 1x/week."},
+{t:"IV Drip (2x/month)",c:"Mag 2g, Taurine 2–4g, NAC 1–2g, Vit C 5–10g, B-Complex, L-Carnitine 1–2g. Glutathione 2g push at END (separate from Vit C). Optional: ALA 600mg IV."},
+{t:"Retest: End of March + Mid-May 2026",c:"March = baseline. May = progress check. Targets: HDL >35, E2 20–30, AST <40, SDNN >50ms. Full panel + CAC score, echo, EKG, CIMT, DEXA."},
+{t:"HRV Monitoring",c:"Oura = rMSSD. Health Sync → Apple Health = SDNN (≈3× rMSSD). Weekly avg > single readings. Log compound changes + taper progress."},
+{t:"Non-Supplement HRV",c:"Zone 2: 150–180 min/wk. Resonance breathing: 5–6 breaths/min, 10–20 min/day. Cold: 2–3 min cold shower."},
+];
+let h='';
+ns.forEach(n=>{h+='<div class="nc"><div class="nct">'+n.t+'</div><div class="ncb">'+n.c+'</div></div>';});
+document.getElementById('p-n').innerHTML=h;
+}
+setInterval(()=>{const stored=localStorage.getItem('p:'+dk());if(!stored&&Object.keys(ck).length>0){ck={};rd();uh();document.getElementById('sM').textContent='New day — checklist reset';}},60000);
+ld();rd();rc();rn();uh();
+</script>
+</body>
+</html>
