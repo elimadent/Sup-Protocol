@@ -103,6 +103,7 @@ var P=[
 {n:"Hyaluronic Acid",d:"100-200mg",o:"Empty stomach + water",g:""},
 {n:"L-Tyrosine",d:"1,000mg",o:"30 min before food",g:""},
 {n:"Lion's Mane",d:"1,000mg (2 caps)",o:"Nootropics Depot 8:1 dual extract",g:""},
+{n:"Urolithin A",d:"1,000mg (2 caps)",o:"Neurogan PRO+ - mitophagy/mito cleanup",g:"n"},
 {n:"Tadalafil",d:"10mg",o:"Daily - peak levels at workout + CV protection",g:"v"},
 {n:"UC-II Collagen",d:"40mg",o:"Empty stomach - joint immune tolerance",g:"n"},
 {n:"Psilocybin",d:"1 packed 00 capsule",o:"Dosing days only (EOD)",g:"c"}
@@ -175,12 +176,13 @@ var IV=[
 {n:"PEA",s:"60ct"},
 {n:"Creatine",s:"powder"},
 {n:"PerfectAmino",s:"powder"},
-{n:"Pure Encap DHEA",s:"25mg 180ct"}
+{n:"Pure Encap DHEA",s:"25mg 180ct"},
+{n:"Neurogan PRO+ Urolithin A",s:"1000mg 120ct (1 backup)"}
 ];
 var ck={};var ist={};
 function dk(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function ldC(){try{var r=localStorage.getItem('p2:'+dk());if(r){ck=JSON.parse(r);}else{ck={};}}catch(e){ck={};}}
-function ldI(){try{var r=localStorage.getItem('ist2');if(r){ist=JSON.parse(r);}else{for(var i=0;i<IV.length;i++){ist[i]=0;}}}catch(e){for(var j=0;j<IV.length;j++){ist[j]=0;}}}
+function ldI(){try{var r=localStorage.getItem('ist2');if(r){ist=JSON.parse(r);}else{for(var i=0;i<IV.length;i++){ist[i]=0;}}}catch(e){for(var j=0;j<IV.length;j++){ist[j]=0;}}if(ist[28]===undefined)ist[28]=2;}
 function svC(){try{localStorage.setItem('p2:'+dk(),JSON.stringify(ck));document.getElementById('sM').textContent='Saved '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+' - resets at midnight';}catch(e){}}
 function svI(){try{localStorage.setItem('ist2',JSON.stringify(ist));}catch(e){}}
 function upH(){
