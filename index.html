@@ -176,14 +176,13 @@ var IV=[
 {n:"PEA",s:"60ct"},
 {n:"Creatine",s:"powder"},
 {n:"PerfectAmino",s:"powder"},
-{n:"Neurogan PRO+ Urolithin A",s:"1000mg 120ct"}
 {n:"Pure Encap DHEA",s:"25mg 180ct"},
-{n:"Neurogan PRO+ Urolithin A",s:"1000mg 120ct (1 backup)"},
+{n:"Neurogan PRO+ Urolithin A",s:"1000mg 120ct"}
 ];
 var ck={};var ist={};
 function dk(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function ldC(){try{var r=localStorage.getItem('p2:'+dk());if(r){ck=JSON.parse(r);}else{ck={};}}catch(e){ck={};}}
-function ldI(){try{var r=localStorage.getItem('ist2');if(r){ist=JSON.parse(r);}else{for(var i=0;i<IV.length;i++){ist[i]=0;}}}catch(e){for(var j=0;j<IV.length;j++){ist[j]=0;}}if(ist[28]===undefined)ist[28]=2;}
+function ldI(){try{var r=localStorage.getItem('ist2');if(r){ist=JSON.parse(r);}else{for(var i=0;i<IV.length;i++){ist[i]=0;}}}catch(e){for(var j=0;j<IV.length;j++){ist[j]=0;}}}
 function svC(){try{localStorage.setItem('p2:'+dk(),JSON.stringify(ck));document.getElementById('sM').textContent='Saved '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+' - resets at midnight';}catch(e){}}
 function svI(){try{localStorage.setItem('ist2',JSON.stringify(ist));}catch(e){}}
 function upH(){
